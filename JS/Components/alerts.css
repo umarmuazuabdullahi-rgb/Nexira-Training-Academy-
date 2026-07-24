@@ -1,0 +1,20 @@
+
+/* =========================================================
+   Alerts
+   ========================================================= */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+.alert--success { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: #047857; }
+.alert--error { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); color: #b91c1c; }
+.alert--warning { background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); color: #b45309; }
+.alert--info { background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); color: #1d4ed8; }
+.alert__icon { flex-shrink: 0; margin-top: 2px; }
+.alert__content { flex: 1; }
+.alert__message { font-weight: 500; }
