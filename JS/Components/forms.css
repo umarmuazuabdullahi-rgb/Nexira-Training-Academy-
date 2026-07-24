@@ -1,0 +1,96 @@
+
+/* =========================================================
+   Forms
+   ========================================================= */
+.form__group {
+  margin-bottom: var(--space-5);
+}
+
+.form__label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-2);
+}
+.form__label--required::after {
+  content: " *";
+  color: var(--color-danger);
+}
+
+.form__input, .form__select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-surface);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.form__input:focus, .form__select:focus {
+  border-color: var(--color-navy-400);
+  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+}
+.form__input--error {
+  border-color: var(--color-danger);
+  background: rgba(239, 68, 68, 0.03);
+}
+.form__input--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form__error {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  margin-top: var(--space-1);
+}
+
+.form__check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+.form__check-input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-navy-700);
+  cursor: pointer;
+}
+.form__check-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  line-height: 1.5;
+}
+.form__check-label a {
+  color: var(--color-navy-700);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.password-strength {
+  margin-top: var(--space-2);
+}
+.password-strength__bar {
+  height: 4px;
+  background: var(--color-gray-200);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+.password-strength__fill {
+  height: 100%;
+  width: 0;
+  border-radius: var(--border-radius-full);
+  transition: width 0.3s ease, background 0.3s ease;
+}
+.password-strength__fill--weak { width: 33%; background: var(--color-danger); }
+.password-strength__fill--medium { width: 66%; background: var(--color-warning); }
+.password-strength__fill--strong { width: 100%; background: var(--color-success); }
+.password-strength__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
