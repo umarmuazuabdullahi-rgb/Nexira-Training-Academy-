@@ -1,0 +1,103 @@
+
+/* =========================================================
+   Auth Pages (Login / Register)
+   ========================================================= */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  background: linear-gradient(135deg, var(--color-navy-900) 0%, var(--color-navy-800) 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-surface);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-10) var(--space-8);
+}
+
+.auth-card__brand {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.auth-card__logo {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--color-navy-700), var(--color-navy-500));
+  color: var(--color-gold-500);
+  font-weight: 800;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-lg);
+  margin: 0 auto var(--space-4);
+}
+
+.auth-card__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-navy-900);
+  margin-bottom: var(--space-2);
+}
+
+.auth-card__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.auth-card__form {
+  margin-bottom: var(--space-6);
+}
+
+.auth-card__options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-sm);
+}
+
+.auth-card__forgot {
+  color: var(--color-navy-700);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+.auth-card__forgot:hover {
+  text-decoration: underline;
+}
+
+.auth-card__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+.auth-card__divider::before, .auth-card__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.auth-card__footer {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-6);
+}
+.auth-card__footer a {
+  color: var(--color-navy-700);
+  font-weight: 600;
+}
+.auth-card__footer a:hover {
+  text-decoration: underline;
+}
