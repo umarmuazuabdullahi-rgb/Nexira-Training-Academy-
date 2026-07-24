@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="allowed-roles" content="">
+  <meta name="description" content="Create your Nexira Academy account.">
+  <title>Create Account — Nexira Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="css/components/forms.css">
+  <link rel="stylesheet" href="css/components/alerts.css">
+  <link rel="stylesheet" href="css/pages/auth.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="page-transition">
+  <div class="auth-page">
+    <div class="auth-card animate-scale-in">
+      <div class="auth-card__brand">
+        <div class="auth-card__logo">N</div>
+        <h1 class="auth-card__title">Create Account</h1>
+        <p class="auth-card__subtitle">Join thousands of professionals advancing their careers</p>
+      </div>
+      <div id="auth-alerts"></div>
+      <form class="auth-card__form" id="register-form" novalidate>
+        <div class="form__group">
+          <label for="fullName" class="form__label form__label--required">Full Name</label>
+          <input type="text" id="fullName" name="fullName" class="form__input" placeholder="John Doe" autocomplete="name" required>
+          <span class="form__error hidden" id="name-error">Please enter your full name</span>
+        </div>
+        <div class="form__group">
+          <label for="email" class="form__label form__label--required">Email Address</label>
+          <input type="email" id="email" name="email" class="form__input" placeholder="you@company.com" autocomplete="email" required>
+          <span class="form__error hidden" id="email-error">Please enter a valid email address</span>
+        </div>
+        <div class="form__group">
+          <label for="role" class="form__label form__label--required">I am a</label>
+          <select id="role" name="role" class="form__select" required>
+            <option value="" disabled selected>Select your role</option>
+            <option value="student">Student — I want to learn</option>
+            <option value="instructor">Instructor — I want to teach</option>
+          </select>
+          <span class="form__error hidden" id="role-error">Please select a role</span>
+        </div>
+        <div class="form__group">
+          <label for="password" class="form__label form__label--required">Password</label>
+          <input type="password" id="password" name="password" class="form__input" placeholder="Create a strong password" autocomplete="new-password" required>
+          <div class="password-strength">
+            <div class="password-strength__bar"><div class="password-strength__fill" id="strength-fill"></div></div>
+            <p class="password-strength__label" id="strength-label">Enter a password</p>
+          </div>
+          <span class="form__error hidden" id="password-error">Password must be at least 8 characters</span>
+        </div>
+        <div class="form__group">
+          <label for="confirmPassword" class="form__label form__label--required">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form__input" placeholder="Confirm your password" autocomplete="new-password" required>
+          <span class="form__error hidden" id="confirm-error">Passwords do not match</span>
+        </div>
+        <div class="form__group">
+          <label class="form__check">
+            <input type="checkbox" name="terms" id="terms" class="form__check-input" required>
+            <span class="form__check-label">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></span>
+          </label>
+          <span class="form__error hidden" id="terms-error">You must agree to the terms</span>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg w-full" id="register-btn">Create Account</button>
+      </form>
+      <div class="auth-card__divider">or sign up with</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+        <button type="button" class="btn btn--outline btn--sm" style="justify-content:center;" onclick="socialSignup('google')">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+        <button type="button" class="btn btn--outline btn--sm" style="justify-content:center;" onclick="socialSignup('microsoft')">
+          <svg width="18" height="18" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#f25022"/><rect x="1" y="11" width="9" height="9" fill="#00a4ef"/><rect x="11" y="1" width="9" height="9" fill="#7fba00"/><rect x="11" y="11" width="9" height="9" fill="#ffb900"/></svg>
+          Microsoft
+        </button>
+      </div>
+      <div class="auth-card__footer">
+        Already have an account? <a href="login.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+<!-- Firebase SDK (Compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+(function() {
+  const form = document.getElementById('register-form');
+  const passwordInput = document.getElementById('password');
+  const confirmInput = document.getElementById('confirmPassword');
+  const registerBtn = document.getElementById('register-btn');
+  const alertsContainer = document.getElementById('auth-alerts');
+  const strengthFill = document.getElementById('strength-fill');
+  const strengthLabel = document.getElementById('strength-label');
+
+  passwordInput.addEventListener('input', () => {
+    const result = Utils.checkPasswordStrength(passwordInput.value);
+    strengthFill.className = 'password-strength__fill';
+    if (passwordInput.value.length === 0) { strengthFill.style.width = '0'; strengthLabel.textContent = 'Enter a password'; }
+    else { strengthFill.classList.add('password-strength__fill--' + result.label); const labels = { weak: 'Weak — add more characters', medium: 'Medium — good progress', strong: 'Strong — excellent!' }; strengthLabel.textContent = labels[result.label]; }
+  });
+
+  document.getElementById('fullName').addEventListener('blur', function() {
+    const error = document.getElementById('name-error');
+    if (!this.value.trim()) { this.classList.add('form__input--error'); error.classList.remove('hidden'); }
+    else { this.classList.remove('form__input--error'); error.classList.add('hidden'); }
+  });
+
+  document.getElementById('email').addEventListener('blur', function() {
+    const error = document.getElementById('email-error');
+    if (!Utils.isValidEmail(this.value)) { this.classList.add('form__input--error'); error.classList.remove('hidden'); }
+    else { this.classList.remove('form__input--error'); error.classList.add('hidden'); }
+  });
+
+  confirmInput.addEventListener('input', function() {
+    const error = document.getElementById('confirm-error');
+    if (this.value && this.value !== passwordInput.value) { this.classList.add('form__input--error'); error.classList.remove('hidden'); }
+    else { this.classList.remove('form__input--error'); error.classList.add('hidden'); }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let hasError = false;
+    const fullName = document.getElementById('fullName');
+    if (!fullName.value.trim()) { fullName.classList.add('form__input--error'); document.getElementById('name-error').classList.remove('hidden'); hasError = true; }
+    const email = document.getElementById('email');
+    if (!Utils.isValidEmail(email.value)) { email.classList.add('form__input--error'); document.getElementById('email-error').classList.remove('hidden'); hasError = true; }
+    const role = document.getElementById('role');
+    if (!role.value) { role.classList.add('form__input--error'); document.getElementById('role-error').classList.remove('hidden'); hasError = true; }
+    if (passwordInput.value.length < 8) { passwordInput.classList.add('form__input--error'); document.getElementById('password-error').classList.remove('hidden'); hasError = true; }
+    if (confirmInput.value !== passwordInput.value) { confirmInput.classList.add('form__input--error'); document.getElementById('confirm-error').classList.remove('hidden'); hasError = true; }
+    const terms = document.getElementById('terms');
+    if (!terms.checked) { document.getElementById('terms-error').classList.remove('hidden'); hasError = true; }
+    if (hasError) return;
+
+    Utils.setButtonLoading(registerBtn, true);
+    alertsContainer.innerHTML = '';
+
+    try {
+      await Auth.register(fullName.value, email.value, passwordInput.value, role.value);
+      alertsContainer.innerHTML = '<div class="alert alert--success"><span class="alert__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill="currentColor"/></svg></span><div class="alert__content"><div class="alert__message">Account created successfully! Redirecting...</div></div></div>';
+      setTimeout(() => Auth.redirectToDashboard(), 1200);
+    } catch (err) {
+      alertsContainer.innerHTML = '<div class="alert alert--error"><span class="alert__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" fill="currentColor"/></svg></span><div class="alert__content"><div class="alert__message">' + (err.message || 'Registration failed.') + '</div></div></div>';
+      Utils.setButtonLoading(registerBtn, false);
+    }
+  });
+
+  window.socialSignup = function(provider) {
+    alertsContainer.innerHTML = '<div class="alert alert--info"><span class="alert__icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill="currentColor"/></svg></span><div class="alert__content"><div class="alert__message">' + provider + ' signup coming soon.</div></div></div>';
+  };
+})();
+</script>
+</body>
+</html>

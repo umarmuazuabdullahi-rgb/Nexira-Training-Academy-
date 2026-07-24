@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="allowed-roles" content="admin">
+  <title>Admin Dashboard — Nexira Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="css/components/cards.css">
+  <link rel="stylesheet" href="css/components/tables.css">
+  <link rel="stylesheet" href="css/components/badges.css">
+  <link rel="stylesheet" href="css/components/alerts.css">
+  <link rel="stylesheet" href="css/components/navigation.css">
+  <link rel="stylesheet" href="css/pages/dashboard.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="page-transition">
+<header class="header">
+  <button class="header__menu-toggle" data-toggle="sidebar" aria-label="Toggle navigation menu" type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="index.html" class="header__brand" aria-label="Nexira Academy Home">
+    <div class="header__logo" aria-hidden="true">N</div>
+    <span class="header__brand-text">Nexira<span>Academy</span></span>
+  </a>
+  <nav class="header__nav" aria-label="Main navigation">
+    <a href="index.html" class="header__nav-link" data-nav="home">Home</a>
+    <a href="courses.html" class="header__nav-link" data-nav="courses">Courses</a>
+    <a href="about.html" class="header__nav-link" data-nav="about">About</a>
+    <a href="contact.html" class="header__nav-link" data-nav="contact">Contact</a>
+  </nav>
+  <div class="header__actions">
+    <button class="btn btn--icon btn--ghost" data-dropdown="#notifications-panel" aria-label="Notifications" title="Notifications" type="button">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      <span class="badge badge--danger badge--pill" style="position:absolute;top:8px;right:8px;font-size:10px;padding:2px 5px;min-width:18px;" id="notification-badge" hidden>0</span>
+    </button>
+    <div class="header__user" data-dropdown="#user-menu" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+      <div class="header__avatar" id="user-initials" aria-hidden="true">?</div>
+      <div class="header__user-info">
+        <span class="header__user-name" id="user-name">Guest</span>
+        <span class="header__user-role" id="user-role">—</span>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-gray-400);"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+  </div>
+</header>
+
+<div id="notifications-panel" class="hidden" style="position:fixed;top:72px;right:24px;width:360px;max-height:480px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-lg);box-shadow:var(--shadow-xl);z-index:var(--z-dropdown);overflow:hidden;" role="dialog" aria-label="Notifications">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+    <h3 style="font-size:16px;font-weight:600;color:var(--color-navy-900);margin:0;">Notifications</h3>
+    <button class="btn btn--sm btn--ghost" style="font-size:12px;" onclick="markAllRead()">Mark all read</button>
+  </div>
+  <div id="notifications-list" style="max-height:400px;overflow-y:auto;padding:8px 0;">
+    <div style="padding:24px;text-align:center;color:var(--color-text-muted);font-size:14px;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 12px;opacity:0.5;"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      <p>No new notifications</p>
+    </div>
+  </div>
+</div>
+
+<div id="user-menu" class="hidden" style="position:fixed;top:72px;right:24px;width:220px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-lg);box-shadow:var(--shadow-xl);z-index:var(--z-dropdown);overflow:hidden;" role="menu" aria-label="User menu">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--color-border);background:var(--color-gray-50);">
+    <p style="font-weight:600;color:var(--color-navy-900);margin:0;font-size:14px;" id="dropdown-user-name">Guest</p>
+    <p style="font-size:12px;color:var(--color-text-muted);margin:4px 0 0;" id="dropdown-user-email">guest@example.com</p>
+  </div>
+  <div style="padding:8px 0;">
+    <a href="profile.html" class="header__nav-link" role="menuitem" style="border-radius:0;padding:10px 20px;display:flex;align-items:center;gap:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+    <a href="settings.html" class="header__nav-link" role="menuitem" style="border-radius:0;padding:10px 20px;display:flex;align-items:center;gap:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</a>
+    <div style="border-top:1px solid var(--color-border);margin:8px 0;"></div>
+    <button onclick="Auth.logout()" role="menuitem" style="width:100%;text-align:left;padding:10px 20px;display:flex;align-items:center;gap:12px;font-size:14px;color:var(--color-danger);background:none;border:none;cursor:pointer;transition:background-color 150ms;" onmouseover="this.style.backgroundColor='var(--color-gray-50)'" onmouseout="this.style.backgroundColor='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out</button>
+  </div>
+</div>
+
+<aside class="sidebar" id="sidebar" aria-label="Admin navigation">
+  <div class="sidebar__section">
+    <p class="sidebar__section-title">Overview</p>
+    <ul class="sidebar__nav">
+      <li class="sidebar__nav-item"><a href="admin-dashboard.html" class="sidebar__nav-link sidebar__nav-link--active" data-page="admin-dashboard"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a></li>
+      <li class="sidebar__nav-item"><a href="admin-analytics.html" class="sidebar__nav-link" data-page="admin-analytics"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a></li>
+      <li class="sidebar__nav-item"><a href="admin-reports.html" class="sidebar__nav-link" data-page="admin-reports"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Reports</a></li>
+    </ul>
+  </div>
+  <div class="sidebar__section">
+    <p class="sidebar__section-title">Management</p>
+    <ul class="sidebar__nav">
+      <li class="sidebar__nav-item"><a href="admin-users.html" class="sidebar__nav-link" data-page="admin-users"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Users<span class="sidebar__nav-badge" id="badge-users">1,247</span></a></li>
+      <li class="sidebar__nav-item"><a href="admin-courses.html" class="sidebar__nav-link" data-page="admin-courses"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Courses<span class="sidebar__nav-badge" id="badge-courses">86</span></a></li>
+      <li class="sidebar__nav-item"><a href="admin-instructors.html" class="sidebar__nav-link" data-page="admin-instructors"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Instructors</a></li>
+      <li class="sidebar__nav-item"><a href="admin-enrollments.html" class="sidebar__nav-link" data-page="admin-enrollments"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>Enrollments</a></li>
+    </ul>
+  </div>
+  <div class="sidebar__section">
+    <p class="sidebar__section-title">System</p>
+    <ul class="sidebar__nav">
+      <li class="sidebar__nav-item"><a href="admin-settings.html" class="sidebar__nav-link" data-page="admin-settings"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</a></li>
+      <li class="sidebar__nav-item"><a href="admin-logs.html" class="sidebar__nav-link" data-page="admin-logs"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>System Logs</a></li>
+    </ul>
+  </div>
+</aside>
+
+<main class="main--with-sidebar">
+  <div class="main__content">
+    <div class="dashboard-header animate-fade-in-up">
+      <h1 class="dashboard-header__title">Admin Dashboard</h1>
+      <p class="dashboard-header__subtitle">Overview of platform performance and user activity</p>
+    </div>
+    <div class="stats-grid animate-fade-in-up delay-1">
+      <div class="card card--stat"><p class="card__value" id="stat-users">—</p><p class="card__label">Total Users</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+12.5% this month</p></div>
+      <div class="card card--stat"><p class="card__value" id="stat-courses">—</p><p class="card__label">Active Courses</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+8 new this week</p></div>
+      <div class="card card--stat"><p class="card__value" id="stat-enrollments">—</p><p class="card__label">Total Enrollments</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+24.3% this month</p></div>
+      <div class="card card--stat"><p class="card__value" id="stat-revenue">$48.2K</p><p class="card__label">Monthly Revenue</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+18.7% vs last month</p></div>
+    </div>
+    <div class="dashboard-grid animate-fade-in-up delay-2">
+      <div class="dashboard-grid__col--8">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Recent Users</h3><p class="card__subtitle">Latest registrations on the platform</p></div><a href="admin-users.html" class="btn btn--sm btn--ghost">View All</a></div>
+          <div class="card__body" style="padding:0;">
+            <div class="table-wrapper">
+              <table class="table table--compact">
+                <thead class="table__head"><tr><th>User</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+                <tbody class="table__body" id="users-table-body">
+                  <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--color-text-muted);">Loading users...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid__col--4">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Recent Activity</h3><p class="card__subtitle">Latest platform events</p></div></div>
+          <div class="card__body">
+            <ul class="activity-feed">
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--user">👤</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>Sarah Mitchell</strong> registered as a new student</p><p class="activity-feed__time">2 hours ago</p></div></li>
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--course">📚</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>Advanced React Patterns</strong> course published by James Chen</p><p class="activity-feed__time">5 hours ago</p></div></li>
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--completion">✅</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>Emily Parker</strong> completed <strong>Data Science Fundamentals</strong></p><p class="activity-feed__time">1 day ago</p></div></li>
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--alert">⚠️</div><div class="activity-feed__content"><p class="activity-feed__text">System backup completed successfully</p><p class="activity-feed__time">1 day ago</p></div></li>
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--user">👤</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>James Chen</strong> updated instructor profile</p><p class="activity-feed__time">2 days ago</p></div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid__col--6">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Popular Courses</h3><p class="card__subtitle">Top performing courses this month</p></div><a href="admin-courses.html" class="btn btn--sm btn--ghost">View All</a></div>
+          <div class="card__body">
+            <div style="display:flex;flex-direction:column;gap:16px;" id="popular-courses">
+              <div style="display:flex;align-items:center;gap:16px;"><div style="width:48px;height:48px;border-radius:var(--border-radius-md);background:linear-gradient(135deg,var(--color-navy-700),var(--color-navy-500));display:flex;align-items:center;justify-content:center;color:var(--color-gold-500);font-size:20px;">⚛️</div><div style="flex:1;"><p style="font-weight:600;color:var(--color-navy-900);margin:0;">Advanced React Patterns</p><p style="font-size:13px;color:var(--color-text-muted);margin:4px 0 0;">1,245 students • 4.9 ★</p></div><span class="badge badge--success">+24%</span></div>
+              <div style="display:flex;align-items:center;gap:16px;"><div style="width:48px;height:48px;border-radius:var(--border-radius-md);background:linear-gradient(135deg,var(--color-navy-700),var(--color-navy-500));display:flex;align-items:center;justify-content:center;color:var(--color-gold-500);font-size:20px;">🐍</div><div style="flex:1;"><p style="font-weight:600;color:var(--color-navy-900);margin:0;">Python for Data Science</p><p style="font-size:13px;color:var(--color-text-muted);margin:4px 0 0;">982 students • 4.8 ★</p></div><span class="badge badge--success">+18%</span></div>
+              <div style="display:flex;align-items:center;gap:16px;"><div style="width:48px;height:48px;border-radius:var(--border-radius-md);background:linear-gradient(135deg,var(--color-navy-700),var(--color-navy-500));display:flex;align-items:center;justify-content:center;color:var(--color-gold-500);font-size:20px;">🔒</div><div style="flex:1;"><p style="font-weight:600;color:var(--color-navy-900);margin:0;">Cybersecurity Fundamentals</p><p style="font-size:13px;color:var(--color-text-muted);margin:4px 0 0;">756 students • 4.7 ★</p></div><span class="badge badge--success">+32%</span></div>
+              <div style="display:flex;align-items:center;gap:16px;"><div style="width:48px;height:48px;border-radius:var(--border-radius-md);background:linear-gradient(135deg,var(--color-navy-700),var(--color-navy-500));display:flex;align-items:center;justify-content:center;color:var(--color-gold-500);font-size:20px;">☁️</div><div style="flex:1;"><p style="font-weight:600;color:var(--color-navy-900);margin:0;">AWS Cloud Architecture</p><p style="font-size:13px;color:var(--color-text-muted);margin:4px 0 0;">634 students • 4.9 ★</p></div><span class="badge badge--success">+15%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid__col--6">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Quick Actions</h3><p class="card__subtitle">Frequently used admin tools</p></div></div>
+          <div class="card__body">
+            <div class="quick-actions">
+              <a href="admin-users.html?action=create" class="quick-action"><div class="quick-action__icon quick-action__icon--primary">👤</div><span class="quick-action__label">Add User</span></a>
+              <a href="admin-courses.html?action=create" class="quick-action"><div class="quick-action__icon quick-action__icon--accent">📚</div><span class="quick-action__label">New Course</span></a>
+              <a href="admin-reports.html" class="quick-action"><div class="quick-action__icon quick-action__icon--success">📊</div><span class="quick-action__label">Reports</span></a>
+              <a href="admin-settings.html" class="quick-action"><div class="quick-action__icon quick-action__icon--info">⚙️</div><span class="quick-action__label">Settings</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Firebase SDK (Compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+(function() {
+  const statValues = document.querySelectorAll('.card__value');
+  statValues.forEach((el, i) => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(10px)';
+    setTimeout(() => { el.style.transition = 'opacity 0.6s ease, transform 0.6s ease'; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 200 + (i * 100));
+  });
+})();
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const waitForAuth = () => new Promise(resolve => {
+    const check = () => { if (Auth.userProfile) return resolve(); if (!Auth.isAuthenticated()) return resolve(); setTimeout(check, 200); };
+    check();
+  });
+  await waitForAuth();
+  const role = Auth.getRole();
+  const uid = Auth.currentUser?.uid;
+  if (!uid || role !== 'admin') return;
+
+  try {
+    const stats = await API.getDashboardStats(role, uid);
+    if (document.getElementById('stat-users')) document.getElementById('stat-users').textContent = stats.totalUsers.toLocaleString();
+    if (document.getElementById('stat-courses')) document.getElementById('stat-courses').textContent = stats.totalCourses;
+    if (document.getElementById('stat-enrollments')) document.getElementById('stat-enrollments').textContent = stats.totalEnrollments.toLocaleString();
+    if (document.getElementById('badge-users')) document.getElementById('badge-users').textContent = stats.totalUsers.toLocaleString();
+    if (document.getElementById('badge-courses')) document.getElementById('badge-courses').textContent = stats.totalCourses;
+
+    // Load recent users
+    const users = await API.getAllUsers();
+    const tbody = document.getElementById('users-table-body');
+    if (tbody && users.length > 0) {
+      tbody.innerHTML = users.slice(0, 5).map(u => {
+        const initials = Utils.getInitials(u.name);
+        const bg = u.role === 'instructor' ? 'linear-gradient(135deg,var(--color-gold-500),var(--color-gold-300))' : 'linear-gradient(135deg,var(--color-navy-600),var(--color-navy-400))';
+        const color = u.role === 'instructor' ? 'var(--color-navy-900)' : 'white';
+        const statusClass = u.status === 'active' ? 'table__cell--status--active' : (u.status === 'pending' ? 'table__cell--status--pending' : 'table__cell--status--inactive');
+        const statusText = u.status || 'Active';
+        return `<tr><td><div style="display:flex;align-items:center;gap:12px;"><div style="width:36px;height:36px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;color:${color};font-size:12px;font-weight:600;">${initials}</div><div><p style="font-weight:500;color:var(--color-navy-900);margin:0;">${Utils.escapeHtml(u.name)}</p><p style="font-size:12px;color:var(--color-text-muted);margin:0;">${Utils.escapeHtml(u.email)}</p></div></div></td><td><span class="badge badge--${u.role === 'instructor' ? 'accent' : 'info'}">${u.role}</span></td><td><span class="table__cell--status ${statusClass}">${statusText}</span></td><td>${Utils.formatDate(u.createdAt)}</td><td><div class="table__cell--actions"><button class="btn btn--sm btn--ghost">Edit</button><button class="btn btn--sm btn--ghost">View</button></div></td></tr>`;
+      }).join('');
+    }
+  } catch (e) { console.error('Failed to load admin stats:', e); }
+});
+</script>
+</body>
+</html>

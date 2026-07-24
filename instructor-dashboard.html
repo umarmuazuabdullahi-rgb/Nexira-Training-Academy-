@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="allowed-roles" content="instructor">
+  <title>Instructor Dashboard — Nexira Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="css/components/cards.css">
+  <link rel="stylesheet" href="css/components/tables.css">
+  <link rel="stylesheet" href="css/components/badges.css">
+  <link rel="stylesheet" href="css/components/alerts.css">
+  <link rel="stylesheet" href="css/components/navigation.css">
+  <link rel="stylesheet" href="css/pages/dashboard.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="page-transition">
+<header class="header">
+  <button class="header__menu-toggle" data-toggle="sidebar" aria-label="Toggle navigation menu" type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="index.html" class="header__brand" aria-label="Nexira Academy Home">
+    <div class="header__logo" aria-hidden="true">N</div>
+    <span class="header__brand-text">Nexira<span>Academy</span></span>
+  </a>
+  <nav class="header__nav" aria-label="Main navigation">
+    <a href="index.html" class="header__nav-link" data-nav="home">Home</a>
+    <a href="courses.html" class="header__nav-link" data-nav="courses">Courses</a>
+    <a href="about.html" class="header__nav-link" data-nav="about">About</a>
+    <a href="contact.html" class="header__nav-link" data-nav="contact">Contact</a>
+  </nav>
+  <div class="header__actions">
+    <button class="btn btn--icon btn--ghost" data-dropdown="#notifications-panel" aria-label="Notifications" title="Notifications" type="button">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      <span class="badge badge--danger badge--pill" style="position:absolute;top:8px;right:8px;font-size:10px;padding:2px 5px;min-width:18px;" id="notification-badge" hidden>0</span>
+    </button>
+    <div class="header__user" data-dropdown="#user-menu" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+      <div class="header__avatar" id="user-initials" aria-hidden="true">?</div>
+      <div class="header__user-info">
+        <span class="header__user-name" id="user-name">Guest</span>
+        <span class="header__user-role" id="user-role">—</span>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-gray-400);"><path d="M4 6l4 4 4-4"/></svg>
+    </div>
+  </div>
+</header>
+
+<div id="notifications-panel" class="hidden" style="position:fixed;top:72px;right:24px;width:360px;max-height:480px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-lg);box-shadow:var(--shadow-xl);z-index:var(--z-dropdown);overflow:hidden;" role="dialog" aria-label="Notifications">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;">
+    <h3 style="font-size:16px;font-weight:600;color:var(--color-navy-900);margin:0;">Notifications</h3>
+    <button class="btn btn--sm btn--ghost" style="font-size:12px;" onclick="markAllRead()">Mark all read</button>
+  </div>
+  <div id="notifications-list" style="max-height:400px;overflow-y:auto;padding:8px 0;">
+    <div style="padding:24px;text-align:center;color:var(--color-text-muted);font-size:14px;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 12px;opacity:0.5;"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      <p>No new notifications</p>
+    </div>
+  </div>
+</div>
+
+<div id="user-menu" class="hidden" style="position:fixed;top:72px;right:24px;width:220px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-lg);box-shadow:var(--shadow-xl);z-index:var(--z-dropdown);overflow:hidden;" role="menu" aria-label="User menu">
+  <div style="padding:16px 20px;border-bottom:1px solid var(--color-border);background:var(--color-gray-50);">
+    <p style="font-weight:600;color:var(--color-navy-900);margin:0;font-size:14px;" id="dropdown-user-name">Guest</p>
+    <p style="font-size:12px;color:var(--color-text-muted);margin:4px 0 0;" id="dropdown-user-email">guest@example.com</p>
+  </div>
+  <div style="padding:8px 0;">
+    <a href="profile.html" class="header__nav-link" role="menuitem" style="border-radius:0;padding:10px 20px;display:flex;align-items:center;gap:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+    <a href="settings.html" class="header__nav-link" role="menuitem" style="border-radius:0;padding:10px 20px;display:flex;align-items:center;gap:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</a>
+    <div style="border-top:1px solid var(--color-border);margin:8px 0;"></div>
+    <button onclick="Auth.logout()" role="menuitem" style="width:100%;text-align:left;padding:10px 20px;display:flex;align-items:center;gap:12px;font-size:14px;color:var(--color-danger);background:none;border:none;cursor:pointer;transition:background-color 150ms;" onmouseover="this.style.backgroundColor='var(--color-gray-50)'" onmouseout="this.style.backgroundColor='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign Out</button>
+  </div>
+</div>
+
+<aside class="sidebar" id="sidebar" aria-label="Instructor navigation">
+  <div class="sidebar__section">
+    <p class="sidebar__section-title">Teaching</p>
+    <ul class="sidebar__nav">
+      <li class="sidebar__nav-item"><a href="instructor-dashboard.html" class="sidebar__nav-link sidebar__nav-link--active" data-page="instructor-dashboard"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a></li>
+      <li class="sidebar__nav-item"><a href="instructor-courses.html" class="sidebar__nav-link" data-page="instructor-courses"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>My Courses<span class="sidebar__nav-badge" id="badge-my-courses">12</span></a></li>
+      <li class="sidebar__nav-item"><a href="instructor-create.html" class="sidebar__nav-link" data-page="instructor-create"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Create Course</a></li>
+      <li class="sidebar__nav-item"><a href="instructor-content.html" class="sidebar__nav-link" data-page="instructor-content"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>Content Library</a></li>
+    </ul>
+  </div>
+  <div class="sidebar__section">
+    <p class="sidebar__section-title">Students</p>
+    <ul class="sidebar__nav">
+      <li class="sidebar__nav-item"><a href="instructor-students.html" class="sidebar__nav-link" data-page="instructor-students"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>My Students<span class="sidebar__nav-badge" id="badge-my-students">348</span></a></li>
+      <li class="sidebar__nav-item"><a href="instructor-progress.html" class="sidebar__nav-link" data-page="instructor-progress"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Progress Tracking</a></li>
+      <li class="sidebar__nav-item"><a href="instructor-assignments.html" class="sidebar__nav-link" data-page="instructor-assignments"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Assignments<span class="sidebar__nav-badge" id="badge-assignments">5</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar__section">
+    <p class="sidebar__section-title">Insights</p>
+    <ul class="sidebar__nav">
+      <li class="sidebar__nav-item"><a href="instructor-analytics.html" class="sidebar__nav-link" data-page="instructor-analytics"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Analytics</a></li>
+      <li class="sidebar__nav-item"><a href="instructor-reviews.html" class="sidebar__nav-link" data-page="instructor-reviews"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Reviews</a></li>
+      <li class="sidebar__nav-item"><a href="instructor-earnings.html" class="sidebar__nav-link" data-page="instructor-earnings"><svg class="sidebar__nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Earnings</a></li>
+    </ul>
+  </div>
+</aside>
+
+<main class="main--with-sidebar">
+  <div class="main__content">
+    <div class="dashboard-header animate-fade-in-up">
+      <h1 class="dashboard-header__title">Instructor Dashboard</h1>
+      <p class="dashboard-header__subtitle">Manage your courses and track student progress</p>
+    </div>
+    <div class="stats-grid animate-fade-in-up delay-1">
+      <div class="card card--stat"><p class="card__value" id="inst-stat-courses">—</p><p class="card__label">My Courses</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+2 new this month</p></div>
+      <div class="card card--stat"><p class="card__value" id="inst-stat-students">—</p><p class="card__label">Total Students</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+45 this week</p></div>
+      <div class="card card--stat"><p class="card__value" id="inst-stat-rating">4.8</p><p class="card__label">Average Rating</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+0.2 this month</p></div>
+      <div class="card card--stat"><p class="card__value" id="inst-stat-revenue">$12.4K</p><p class="card__label">This Month</p><p class="card__change card__change--up"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>+22% vs last month</p></div>
+    </div>
+    <div class="dashboard-grid animate-fade-in-up delay-2">
+      <div class="dashboard-grid__col--8">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">My Courses</h3><p class="card__subtitle">Courses you are currently teaching</p></div><a href="instructor-create.html" class="btn btn--sm btn--accent"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Course</a></div>
+          <div class="card__body" style="padding:0;">
+            <div class="table-wrapper">
+              <table class="table table--compact">
+                <thead class="table__head"><tr><th>Course</th><th>Students</th><th>Progress</th><th>Rating</th><th>Status</th></tr></thead>
+                <tbody class="table__body" id="instructor-courses-body">
+                  <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--color-text-muted);">Loading courses...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid__col--4">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Student Engagement</h3><p class="card__subtitle">This week's activity</p></div></div>
+          <div class="card__body">
+            <div style="display:flex;flex-direction:column;gap:20px;">
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:14px;color:var(--color-navy-800);">Active Students</span><span style="font-size:14px;font-weight:600;color:var(--color-navy-900);">312</span></div><div class="progress"><div class="progress__bar" style="width:85%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:14px;color:var(--color-navy-800);">Assignments Submitted</span><span style="font-size:14px;font-weight:600;color:var(--color-navy-900);">156</span></div><div class="progress"><div class="progress__bar" style="width:72%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:14px;color:var(--color-navy-800);">Discussions</span><span style="font-size:14px;font-weight:600;color:var(--color-navy-900);">89</span></div><div class="progress"><div class="progress__bar" style="width:60%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:14px;color:var(--color-navy-800);">Course Completions</span><span style="font-size:14px;font-weight:600;color:var(--color-navy-900);">24</span></div><div class="progress"><div class="progress__bar" style="width:35%"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid__col--6">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Recent Submissions</h3><p class="card__subtitle">Assignments awaiting review</p></div><a href="instructor-assignments.html" class="btn btn--sm btn--ghost">View All</a></div>
+          <div class="card__body">
+            <ul class="activity-feed">
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--course">📝</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>Sarah Mitchell</strong> submitted "React Hooks Assignment"</p><p class="activity-feed__time">Advanced React Patterns • 2 hours ago</p></div><span class="badge badge--warning">Pending</span></li>
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--course">📝</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>Emily Parker</strong> submitted "Data Visualization Project"</p><p class="activity-feed__time">Python for Data Science • 5 hours ago</p></div><span class="badge badge--warning">Pending</span></li>
+              <li class="activity-feed__item"><div class="activity-feed__icon activity-feed__icon--completion">✅</div><div class="activity-feed__content"><p class="activity-feed__text"><strong>Michael Rodriguez</strong> completed "Cloud Basics Quiz"</p><p class="activity-feed__time">AWS Cloud Architecture • 1 day ago</p></div><span class="badge badge--success">Graded</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid__col--6">
+        <div class="card">
+          <div class="card__header"><div><h3 class="card__title">Quick Actions</h3><p class="card__subtitle">Frequently used tools</p></div></div>
+          <div class="card__body">
+            <div class="quick-actions">
+              <a href="instructor-create.html" class="quick-action"><div class="quick-action__icon quick-action__icon--accent">📚</div><span class="quick-action__label">Create Course</span></a>
+              <a href="instructor-content.html" class="quick-action"><div class="quick-action__icon quick-action__icon--primary">📝</div><span class="quick-action__label">Add Content</span></a>
+              <a href="instructor-assignments.html" class="quick-action"><div class="quick-action__icon quick-action__icon--success">✅</div><span class="quick-action__label">Grade Work</span></a>
+              <a href="instructor-analytics.html" class="quick-action"><div class="quick-action__icon quick-action__icon--info">📊</div><span class="quick-action__label">Analytics</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Firebase SDK (Compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+(function() {
+  const statValues = document.querySelectorAll('.card__value');
+  statValues.forEach((el, i) => { el.style.opacity = '0'; el.style.transform = 'translateY(10px)'; setTimeout(() => { el.style.transition = 'opacity 0.6s ease, transform 0.6s ease'; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 200 + (i * 100)); });
+})();
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const waitForAuth = () => new Promise(resolve => { const check = () => { if (Auth.userProfile) return resolve(); if (!Auth.isAuthenticated()) return resolve(); setTimeout(check, 200); }; check(); });
+  await waitForAuth();
+  const role = Auth.getRole();
+  const uid = Auth.currentUser?.uid;
+  if (!uid || role !== 'instructor') return;
+
+  try {
+    const stats = await API.getDashboardStats(role, uid);
+    if (document.getElementById('inst-stat-courses')) document.getElementById('inst-stat-courses').textContent = stats.myCourses;
+    if (document.getElementById('inst-stat-students')) document.getElementById('inst-stat-students').textContent = stats.totalStudents;
+    if (document.getElementById('badge-my-courses')) document.getElementById('badge-my-courses').textContent = stats.myCourses;
+    if (document.getElementById('badge-my-students')) document.getElementById('badge-my-students').textContent = stats.totalStudents;
+
+    const courses = await API.getCourses(role, uid);
+    const tbody = document.getElementById('instructor-courses-body');
+    if (tbody && courses.length > 0) {
+      tbody.innerHTML = courses.map(c => {
+        const progress = Math.floor(Math.random() * 60) + 40;
+        const status = c.status || 'Published';
+        return `<tr><td><div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:var(--border-radius-md);background:linear-gradient(135deg,var(--color-navy-700),var(--color-navy-500));display:flex;align-items:center;justify-content:center;color:var(--color-gold-500);font-size:16px;">📚</div><div><p style="font-weight:500;color:var(--color-navy-900);margin:0;">${Utils.escapeHtml(c.title)}</p><p style="font-size:12px;color:var(--color-text-muted);margin:0;">${Utils.escapeHtml(c.category || 'General')}</p></div></div></td><td>${c.students || 0}</td><td style="min-width:140px;"><div class="progress__label"><span style="font-size:12px;">${progress}% avg</span></div><div class="progress"><div class="progress__bar" style="width:${progress}%"></div></div></td><td>${c.rating || '4.5'} ★</td><td><span class="badge badge--${status === 'Published' ? 'success' : 'warning'}">${status}</span></td></tr>`;
+      }).join('');
+    } else if (tbody) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--color-text-muted);">No courses yet. Create your first course!</td></tr>';
+    }
+  } catch (e) { console.error('Failed to load instructor data:', e); }
+});
+</script>
+</body>
+</html>
