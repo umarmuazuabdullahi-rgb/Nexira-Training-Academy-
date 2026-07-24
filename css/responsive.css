@@ -1,0 +1,73 @@
+
+/* =========================================================
+   Responsive Adjustments
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+  .header__menu-toggle {
+    display: flex;
+  }
+  .header__nav {
+    display: none;
+  }
+  .main--with-sidebar {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 var(--space-4);
+  }
+  .header__user-info {
+    display: none;
+  }
+  .main__content {
+    padding: var(--space-4);
+  }
+  .auth-card {
+    padding: var(--space-6) var(--space-5);
+  }
+  .hero {
+    padding: var(--space-10) var(--space-4);
+  }
+  .hero__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero__actions .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+  .features {
+    padding: var(--space-10) 0;
+  }
+  .cta-section {
+    padding: var(--space-10) var(--space-4);
+  }
+  .stats-banner {
+    padding: var(--space-10) 0;
+  }
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .dashboard-grid > div {
+    grid-column: span 12 !important;
+  }
+  .table-wrapper {
+    margin: 0 calc(-1 * var(--space-4));
+    padding: 0 var(--space-4);
+  }
+}
